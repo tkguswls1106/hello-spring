@@ -45,7 +45,9 @@ public class HelloController {  // 클래스 이름은 java 파일명과 동일�
         hello.setName(name);
         return hello;  // 방금 Hello클래스로 만든 hello객체를 반환함.
     }
-    static class Hello {  // static은 정적이란 뜻으로, 선언하게 되는 경우 자바가 컴파일 되는 시점에 정의가 된다. 그래서 위의
+    static class Hello {  // static은 정적이란 뜻으로, 그중 static class의 경우에는 외부클래스 안에 내부 클래스를 만들때 사용할수있는 방법중 하나이다.
+                          // 원래 내부 클래스인 Hello로 객체를 생성할때 외부 클래스인 HelloController로 먼저 new 객체를 생성하고 그걸로 접근을 해서 내부클래스로 new하여 객체를 생성해야하는데,
+                          // 내부 클래스를 static으로 선언하였으므로, 외부클래스의 접근 필요없이 위의 helloApi 메소드 안에서 Hello hello = new Hello(); 로 바로 내부 클래스를 사용하여 객체를 생성할수있게된것이다.
         private String name;
 
         public String getName() {  // private로 지정한 name 필드에 접근하기위해 getter setter 이용함.
