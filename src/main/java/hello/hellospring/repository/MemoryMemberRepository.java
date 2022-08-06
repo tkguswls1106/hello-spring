@@ -35,6 +35,9 @@ public class MemoryMemberRepository implements MemberRepository {  // 인터페�
     public Optional<Member> findByName(String name) {
         return store.values().stream()  // 아마도 데이터가공시에 사용되는것이 stream인듯 하다. -> 인 화살표로 람다 작성.
                 .filter(member -> member.getName().equals(name))  // member.getName()이 findByName(String name)의 매개변수로 넘어온 name과 같은지 확인하는 것이다. 같은경우에만 필터링이 실행된다.
+                // (member -> member.getName().equals(name))에서, 첫 member은 데이터들을 모두 돌려보는 어떠한 메소드의 매개변수값이고,
+                // 그 메소드의 return 반환결과값이 member.getName().equals(name) 인 것이다.
+                // 즉, 하나하나 전부 member 데이터를 매개변수로 넣어 돌려 찾아가면서 findByName(String name)의 매개변수로 넘어온 name과 같은지 확인하는 것이다.
                 .findAny();  // 필터링된 그중에서 가장 먼저 탐색된 요소를 반환함.
     }
 
