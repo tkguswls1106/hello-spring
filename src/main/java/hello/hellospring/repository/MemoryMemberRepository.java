@@ -46,4 +46,8 @@ public class MemoryMemberRepository implements MemberRepository {  // 인터페�
         return new ArrayList<>(store.values());
         // ArrayList는 List 컬렉션 인터페이스를 구현한 구현클래스이다.
     }
+
+    public void clearStore() {
+        store.clear();
+    }
 }
