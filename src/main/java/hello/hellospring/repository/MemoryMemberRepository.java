@@ -20,7 +20,7 @@ public class MemoryMemberRepository implements MemberRepository {  // 인터페�
 
     @Override
     public Member save(Member member) {
-        member.setId(++sequence);  // member의 id로 ++sequence 를 저장하고,
+        member.setId(++sequence);  // member의 id로 ++sequence 를 저장하고,  // 메소드 매개변수 안에 Member member가 적혀있으므로, 따로 new로 생성해주지 않고 바로 사용하면 된다.
         store.put(member.getId(), member);  // 방금 저장한 id를 불러와서 그걸 키로 넣고, 값으로 member을 넣어서, 구조체처럼 store라는 이름의 메모리구현체에 키값쌍정보를 DB처럼 저장함.
         return member;  // 저장한 회원정보 반환.
     }

@@ -22,7 +22,7 @@ class MemoryMemberRepositoryTest {
 
     @Test
     public void save() {  // 실행시켜서 녹색이 뜨면 정상실행 검사 성공. 참고로 이처럼 메소드별 검사도 가능하고, 클래스나 전체 등등 여러 범위로 검사 실행이 가능하다.
-        Member member = new Member();
+        Member member = new Member();  // 메소드 매개변수 안에 Member member가 적혀있지않으므로, 따로 new로 생성해주고 사용해야만 한다.
         member.setName("spring");
 
         repository.save(member);

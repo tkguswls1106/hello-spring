@@ -9,7 +9,12 @@ import java.util.Optional;
 
 public class MemberService {
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository(); // 좌항 우항 다른거니까 이름 비슷하다고 헷갈리지말자!
+    // private final MemberRepository memberRepository = new MemoryMemberRepository(); // 좌항 우항 다른거니까 이름 비슷하다고 헷갈리지말자!
+    private final MemberRepository memberRepository;
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }  // 이 코드 대신 위의 주석처리된 코드로 쓰면 각 테스트마다 DB저장소가 개별의 것으로 점점 늘어나니까, 하나의 DB 저장소 사용으로 변경해주기위해 이 코드로 대신 작성해준다.
+    // 이처럼 외부에서 저장소를 넣어주는것을 DI라고 한다.
 
     public Long join(Member member) {  // 회원가입 기능중, 저장기능
         // Optional<Member> result = memberRepository.findByName(member.getName());
