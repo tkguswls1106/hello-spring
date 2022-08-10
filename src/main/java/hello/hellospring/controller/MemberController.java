@@ -1,8 +1,11 @@
 package hello.hellospring.controller;
 
+import hello.hellospring.domain.Member;
 import hello.hellospring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class MemberController {
@@ -18,4 +21,40 @@ public class MemberController {
     public MemberController(MemberService memberService) {  // MemberService 매개변수를 가진 생성자 MemberController 메소드를 적어주어, MemberController를 MemberService에 연결하여 의존관계를 형성하였다. (DI 방법중 생성자 주입 방법)
         this.memberService = memberService;
     }
+
+    @GetMapping("/members/new")  // method='get' 방식일때
+    public String createForm() {
+        return "members/createMemberForm";
+    }
+
+    @PostMapping("/members/new")  // method='post' 방식일때
+    public String create(MemberForm form) {
+        Member member = new Member();  // 멤버 객체를 생성하고,
+        member.setName(form.getName());  // 매개변수로 가져온 form의 name 정보를 getName으로 가져와서, 그 name 정보를 멤버 객체에 setName으로 저장함.
+
+        memberService.join(member);  // 완성된 멤버 객체를 멤버서비스의 join메소드로 회원가입 기능을 실행함. 즉, 회원 데이터 저장.
+
+        return "redirect:/";  // 홈화면으로 리다이렉트하여 보내버림.
+    }
 }
+
+/*
+<라우팅 과정>
+사용자가 /members/new 링크로 접속
+->
+main_hellospring_controller_MemberController 의 @GetMapping("/members/new") 부분의 코드 실행
+->
+return "members/createMemberForm"; 로 인하여 main_templates_members_createMemberForm.html 파일로 이동하여, 겉폼양식 출력
+->
+input name의 입력할데이터 입력하고 summit 버튼으로 post방식으로 데이터 전달함
+->
+main_hellospring_controller_MemberController 의 @PostMapping("/members/new") 부분의 코드 실행
+->
+가져온데이터가 main_hellospring_controller_MemberForm 의 객체 형태(MemberForm form)로 저장되어, @PostMapping("/members/new") 부분의 메소드의 매개변수로 할당됨.
+->
+멤버 객체를 생성하고,
+매개변수로 가져온 form의 name 정보를 getName으로 가져와서,
+그 name 정보를 멤버 객체에 setName으로 저장함.
+그리고 완성된 멤버 객체를 멤버서비스의 join메소드로 회원가입 기능을 실행함. 즉, 회원 데이터 저장.
+마지막으로 return "redirect:/";으로, 홈화면으로 리다이렉트하여 보내버림.
+*/
