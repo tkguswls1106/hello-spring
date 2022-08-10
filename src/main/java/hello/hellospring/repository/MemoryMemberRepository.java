@@ -8,7 +8,7 @@ import java.util.*;
 // 개발을 진행하기 위해서 초기 개발 단계에서는 구현체로 가벼운 메모리 기반의 데이터 저장소 사용
 
 // 회원 리포지토리 메모리 구현체
-@Repository  // 스프링 컨테이너에 스프링 빈으로 등록하게 해줌.
+// @Repository  // 스프링 컨테이너에 스프링 빈으로 등록하게 해줌.
 public class MemoryMemberRepository implements MemberRepository {  // 인터페이스를 상속받음
 
     private static Map<Long, Member> store = new HashMap<>();  // save 메소드로 저장을 할때 저장할 메모리 구현  // 내가 보기엔 c언어 자료구조(데이터구조)의 연결리스트나 구조체와 약간 유사하다고 생각함.
