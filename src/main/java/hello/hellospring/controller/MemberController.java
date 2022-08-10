@@ -4,8 +4,11 @@ import hello.hellospring.domain.Member;
 import hello.hellospring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 public class MemberController {
@@ -36,10 +39,17 @@ public class MemberController {
 
         return "redirect:/";  // 홈화면으로 리다이렉트하여 보내버림.
     }
+
+    @GetMapping("/members")
+    public String list(Model model) {
+        List<Member> members = memberService.findMembers();
+        model.addAttribute("members", members);
+        return "members/memberList";
+    }
 }
 
 /*
-<라우팅 과정>
+< /members/new 링크 회원가입 절차 라우팅 과정 >
 사용자가 /members/new 링크로 접속
 ->
 main_hellospring_controller_MemberController 의 @GetMapping("/members/new") 부분의 코드 실행

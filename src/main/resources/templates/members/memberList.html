@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div class="container">
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>이름</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="member : ${members}">  <!-- 장고 템플릿 코드 for 문이랑 비슷하고, 거기에 향상된 for문을 응용시킨것 같다. -->
+              <td th:text="${member.id}"></td>
+              <td th:text="${member.name}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div> <!-- /container -->
+  </body>
+</html>
