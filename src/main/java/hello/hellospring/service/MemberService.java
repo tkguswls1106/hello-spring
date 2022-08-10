@@ -3,16 +3,20 @@ package hello.hellospring.service;
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service  // 스프링 컨테이너에 스프링 빈으로 등록하게 해줌.
 public class MemberService {
 
     // private final MemberRepository memberRepository = new MemoryMemberRepository(); // 좌항 우항 다른거니까 이름 비슷하다고 헷갈리지말자!
     private final MemberRepository memberRepository;  // private final로 선언한다면 직접적으로 값을 참조할 수는 없지만 생성자를 통해 매개변수로 넣어 값을 참조할 수 있다. 각각 생성자 메소드 매개변수 별로 호출할 때마다 새로이 값이 할당(인스턴스화)된다.
                                                       // 반면에 private static final을 선언한 변수를 사용하면 재할당하지 못하며, 메모리에 한 번 올라가면 같은 값을 클래스 내부의 전체 필드, 메서드에서 공유한다.
                                                       // 쉽게 설명하자면, 예를들어 조금씩 다르게 생긴 여러 생성자 메소드들을 생성하였을때, private final 은 각각 메소드별로 별개의 값으로 사용이 가능하지만, private static final 은 통합적인 같은값으로 관리된다는 것이다.
+    @Autowired  // 생성자에 @Autowired 가 있으면, 스프링이 연관된 객체를 스프링 컨테이너에서 찾아서 넣어준다. 이는 객체 의존관계를 외부에서 넣어주는 것인 DI이다.
     public MemberService(MemberRepository memberRepository) {  // MemberRepository 매개변수를 가진 생성자 MemberService 메소드를 적어주어, MemberService를 MemberRepository에 연결하여 의존관계를 형성하였다. (DI)
                                                                // 이처럼 객체 의존관계를 외부에서 넣어주는 것을 DI (Dependency Injection), 의존성 주입이라 한다.
         this.memberRepository = memberRepository;
