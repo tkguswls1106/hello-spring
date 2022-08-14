@@ -9,6 +9,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
+// 여기 부분은 Spring 사용없이 순수한 자바 코드만으로 이루어져있으므로, @SpringBootTest를 적지않아도 된다.
 class MemoryMemberRepositoryTest {
 
     MemoryMemberRepository repository = new MemoryMemberRepository();

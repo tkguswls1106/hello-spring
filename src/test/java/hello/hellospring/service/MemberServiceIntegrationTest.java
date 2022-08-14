@@ -1,35 +1,31 @@
 package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
+import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+// test_hellospring_service_MemberServiceTest 클래스 파일을 복사해와서 수정하였음.
 
-// 여기 부분은 Spring 사용없이 순수한 자바 코드만으로 이루어져있으므로, @SpringBootTest를 적지않아도 된다.
-class MemberServiceTest {
+@SpringBootTest  // 스프링 컨테이너와 테스트를 함께 실행한다. 즉, 이전에 해보았던 다른 test들과는 다르게, Spring을 사용하므로 @SpringBootTest 를 적어주어야 한다.
+@Transactional  // 테스트 케이스에 @Transactional 를 적어주면 테스트 시작 전에 트랜잭션을 시작하고, 테스트 완료 후에 항상 롤백한다.
+                // 이렇게 하면 DB에 데이터가 남지 않으므로 다음 테스트에 영향을 주지 않는다.
+                // 덕분에 @AfterEach로 DB 초기화를 시켜주는 코드를 작성하지 않아도 된다.
+class MemberServiceIntegrationTest {
 
-    // MemoryMemberRepository memberRepository = new MemoryMemberRepository();
-    MemoryMemberRepository memberRepository;
+    // MemberRepository memberRepository = new JdbcMemberRepository(dataSource);
+    @Autowired MemberRepository memberRepository;  // MemoryMemberRepository가 아닌, MemberRepository로 코드를 수정한다.
+                                                   // 그 이유는 main_hellospring_SpringConfig 의 코드를 jdbc 연결로 변경했기때문이다.
     // MemberService memberService = new MemberService(memberRepository);
-    MemberService memberService;
-
-    @BeforeEach  // BeforeEach는 클래스 테스트 실행시, 각 테스트 메소드들이 실행되기 전에 미리 앞서서 어떠한 동작을 실행할수있게 해주는 역할이다.
-    public void beforeEach() {
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
-    }
-
-    @AfterEach  // AfterEach는 클래스 테스트 실행시, 각 메소드들이 실행이 끝날때마다 어떠한 동작을 실행할수있게 해주는 역할이다.
-    public void afterEach() {
-        memberRepository.clearStore();  // 이는 MemoryMemberRepository 클래스 안에 clearStore 메소드를 적어주고 코드를 적은것이다.
-    }
+    @Autowired MemberService memberService;
 
     @Test
     void 회원가입() {  // 사실 테스트의 메소드명은 한글로 만들어도 된다.
