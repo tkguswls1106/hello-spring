@@ -11,8 +11,12 @@ import java.util.Optional;
 
 public class JdbcMemberRepository implements MemberRepository {
 
-    private final DataSource dataSource;  // control + enter 키 입력
+    private final DataSource dataSource;  // DB에 연결하려면 DataSource 라는것이 필요하다. 스프링을 통해서 데이터소스를 주입받을것이다. 예를들어 dataSource.getConnection() 같은 걸로.
+    // control + enter 키 입력
 
+    // @Autowired를 생략하였다.
+    // 스프링 부트의 경우 DataSource 같은 DB Connection에 사용하는 기술 지원 로직까지 내부에서 자동으로 빈으로 컨테이너에 등록하기때문에,
+    // 생성자가 하나이고 그 생성자의 파라미터가 빈에 등록되어있는 상태라면, @Autowired를 생략 가능하다라는 조건에 충족하여, @Autowired를 생략한것이다.
     public JdbcMemberRepository(DataSource dataSource) {  // 메모리 구현이 아닌, DB로 연결
         this.dataSource = dataSource;
     }
@@ -32,7 +36,7 @@ public class JdbcMemberRepository implements MemberRepository {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        ResultSet rs = null;  // 결과를 받는것.
 
         try {
             conn = getConnection();
