@@ -16,7 +16,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'  // '순수 JDBC' 강의 파트 설정 추가부분
+	// implementation 'org.springframework.boot:spring-boot-starter-jdbc'  // '순수 JDBC' 강의 파트 설정 추가부분
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'  // 'JPA' 강의 파트 설정 추가부분 (jpa, jdbc 다 포함하는 라이브러리?이다.)
 	runtimeOnly 'com.h2database:h2'  // '순수 JDBC' 강의 파트 설정 추가부분
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
