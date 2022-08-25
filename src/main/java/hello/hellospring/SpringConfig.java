@@ -11,24 +11,28 @@ import javax.persistence.EntityManager;
 @Configuration
 public class SpringConfig {
 
-    private EntityManager em;
-    @Autowired
-    public SpringConfig(EntityManager em) {
-        this.em = em;
+    private final MemberRepository memberRepository;
+
+    // main_hellospring_repository_SpringDataJpaMemberRepository 덕분에 알아서 구현체가 빈에 등록되어있어 @Autowired로 의존관계 형성 가능해져서 인젝션 받음.
+    @Autowired  // @Autowired 생략 가능하긴함.
+    public SpringConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
 
     @Bean  // 스프링 빈을 내가 직접 등록할거야 라는 의미이다.
-    public MemberService memberService() {  // public 메소드반환자료형 메소드명()  // memberService()는 생성자 아니니까 헷갈리지말자!
-        return new MemberService(memberRepository());
+    public MemberService memberService() {
+        return new MemberService(memberRepository);
     }
 
+    /*
     @Bean
     public MemberRepository memberRepository() {  // public 메소드반환자료형 메소드명()  // memberRepository()는 생성자 아니니까 헷갈리지말자!
         // return new MemoryMemberRepository();  // MemberRepository는 인터페이스이기때문에 new로 인스턴스 생성이 불가능하므로, 메모리구현체인 new MemoryMemberRepository() 를 반환한다.
         // return new JdbcMemberRepository(dataSource);  // 이로써 MemoryMemberRepository 를 Jdbc 데이터베이스로 교체하였음.
         // return new JdbcTemplateMemberRepository(dataSource);
-        return new JpaMemberRepository(em);
+        // return new JpaMemberRepository(em);
     }
+    */
 }
 
 /*
