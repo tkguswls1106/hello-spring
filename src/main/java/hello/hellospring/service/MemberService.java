@@ -31,10 +31,18 @@ public class MemberService {
         // throw new IllegalStateException("이미 존재하는 회원입니다.");
         // });
         // 위의 코드 4줄을 줄여서 압축하면 밑의 메소드가 나온다.
-        validateDuplicateMember(member);  // 같은 이름의 중복 회원 검증  // 참고로 동일패키지 동일클래스라서 private인 메소드도 사용 가능하다.
 
-        memberRepository.save(member);
-        return member.getId();  // 회원가입을 하면, id값을 반환해준다.
+        long start = System.currentTimeMillis();
+
+        try {
+            validateDuplicateMember(member);  // 같은 이름의 중복 회원 검증  // 참고로 동일패키지 동일클래스라서 private인 메소드도 사용 가능하다.
+            memberRepository.save(member);
+            return member.getId();  // 회원가입을 하면, id값을 반환해준다.
+        } finally {  // try 부분이 실행되든 안되든간에 무조건 finally문은 실행된다.
+            long finish = System.currentTimeMillis();
+            long timeMS = finish - start;  // 걸린시간계산 결과물
+            System.out.println("join = " + timeMS + "ms");
+        }
     }
     private void validateDuplicateMember(Member member) {  // 회원가입 기능중, 같은 이름의 중복 회원 검증 기능
         memberRepository.findByName(member.getName())
@@ -44,7 +52,14 @@ public class MemberService {
     }
 
     public List<Member> findMembers() {  // 전체 회원 조회 기능
-        return memberRepository.findAll();
+        long start = System.currentTimeMillis();
+        try {
+            return memberRepository.findAll();
+        } finally {
+            long finish = System.currentTimeMillis();
+            long timeMs = finish - start;
+            System.out.println("findMembers " + timeMs + "ms");
+        }
     }
 
     public Optional<Member> findOne(Long memberId) {
